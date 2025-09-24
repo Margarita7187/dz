@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 350px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        input.error {
+            border-color: red;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        button {
+            width: 100%;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="form">
+        <h2>Регистрация</h2>
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="name">Имя:</label>
+                <input type="text" id="name" name="name" placeholder="Введите ваше имя">
+                <div class="error-message" id="nameError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="example@mail.com">
+                <div class="error-message" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password" placeholder="Не менее 8 символов">
+                <div class="error-message" id="passwordError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Подтверждение пароля:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Повторите пароль">
+                <div class="error-message" id="confirmError"></div>
+            </div>
+
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('registrationForm');
+        const inputs = form.querySelectorAll('input');
+
+        // Валидация в реальном времени
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                validateField(input);
+            });
+        });
+
+        function validateField(field) {
+            const errorElement = document.getElementById(field.name + 'Error');
+            let isValid = true;
+            let message = '';
+
+            switch(field.name) {
+                case 'name':
+                    if (field.value.length < 2) {
+                        isValid = false;
+                        message = 'Имя должно содержать минимум 2 символа';
+                    } else if (!/^[a-zA-Zа-яА-Я]+$/.test(field.value)) {
+                        isValid = false;
+                        message = 'Имя должно содержать только буквы';
+                    }
+                    break;
+
+                case 'email':
+                    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
+                        isValid = false;
+                        message = 'Введите корректный email';
+                    }
+                    break;
+
+                case 'password':
+                    if (field.value.length < 8) {
+                        isValid = false;
+                        message = 'Пароль должен содержать минимум 8 символов';
+                    } else if (!/(?=.*[A-Z])(?=.*\d)/.test(field.value)) {
+                        isValid = false;
+                        message = 'Пароль должен содержать хотя бы одну заглавную букву и одну цифру';
+                    }
+                    break;
+
+                case 'confirmPassword':
+                    const password = document.getElementById('password').value;
+                    if (field.value !== password) {
+                        isValid = false;
+                        message = 'Пароли не совпадают';
+                    }
+                    break;
+            }
+
+            // Визуальное отображение ошибок
+            if (isValid) {
+                field.classList.remove('error');
+                errorElement.style.display = 'none';
+            } else {
+                field.classList.add('error');
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+            }
+
+            return isValid;
+        }
+
+        // Валидация при отправке формы
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            let isFormValid = true;
+            
+            inputs.forEach(input => {
+                if (!validateField(input)) {
+                    isFormValid = false;
+                }
+            });
+
+            if (isFormValid) {
+                alert('Форма успешно отправлена!');
+                form.reset();
+            } else {
+                alert('Пожалуйста, исправьте ошибки в форме');
+            }
+        });
+    </script>
+</body>
+</html>

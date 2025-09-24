@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Галерея</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            padding: 20px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            position: relative;
+            text-align: center;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 80vh;
+            border-radius: 10px;
+        }
+
+        .close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+        }
+
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .prev { left: 10px; }
+        .next { right: 10px; }
+    </style>
+</head>
+<body>
+    <div class="gallery">
+        <img src="https://raylab.ru/upload/medialibrary/340/9mjgqrhuxsm06gnzopsieccthd1scj6d.jpg" data-index="0">
+        <img src="https://raylab.ru/upload/medialibrary/39b/bj4xgpseh5x8mmsbpsqvwyk620iazlfw.jpg" data-index="1">
+        <img src="https://raylab.ru/upload/medialibrary/6cb/7z1u41ok61f62fevs25f24m1rdfy5qn2.jpg" data-index="2">
+        <img src="https://raylab.ru/upload/medialibrary/991/d2bj50ec5uzyfv8xn9ja7nkzjyfd53rn.jpg" data-index="3">
+        <img src="https://raylab.ru/upload/medialibrary/450/p0n645brzuhvgzxzeqszs17s34rafczn.jpg" data-index="4">
+        <img src="https://raylab.ru/upload/medialibrary/671/02519zlotbyiz7rofu37mkyh7g32a2su.jpg" data-index="5">
+    </div>
+
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <span class="close" onclick="closeImage()">&times;</span>
+            <button class="nav-btn prev" onclick="prevImage()">❮</button>
+            <img id="lightbox-img">
+            <button class="nav-btn next" onclick="nextImage()">❯</button>
+        </div>
+    </div>
+
+    <script>
+        const images = document.querySelectorAll('.gallery img');
+        let currentIndex = 0;
+
+        function openImage(index) {
+            currentIndex = index;
+            document.getElementById('lightbox').style.display = 'flex';
+            document.getElementById('lightbox-img').src = images[index].src.replace('/200/150', '/600/450');
+        }
+
+        function closeImage() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            document.getElementById('lightbox-img').src = images[currentIndex].src.replace('/200/150', '/600/450');
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            document.getElementById('lightbox-img').src = images[currentIndex].src.replace('/200/150', '/600/450');
+        }
+
+        // Назначаем обработчики
+        images.forEach((img, index) => {
+            img.onclick = () => openImage(index);
+        });
+
+        // Закрытие по клику на фон
+        document.getElementById('lightbox').onclick = (e) => {
+            if (e.target.classList.contains('lightbox')) closeImage();
+        }
+    </script>
+</body>
+</html>
