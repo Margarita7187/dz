@@ -3,7 +3,7 @@ class AsyncPipeline {
     this.steps = []; // Массив для хранения шагов пайплайна
   }
   
-  // Добавление шага в пайплайн (fluent interface)
+  // Добавление шага в пайплайн
   addStep(stepFn) {
     this.steps.push(stepFn);
     return this; // Возвращаем this для цепочки вызовов

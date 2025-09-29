@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const AdvancedTodoApp = () => {
+  // Состояния компонента
   const [tasks, setTasks] = useState([]);
   const [input, setInput] = useState('');
   const [filter, setFilter] = useState('all');
@@ -9,6 +10,7 @@ const AdvancedTodoApp = () => {
   const [sort, setSort] = useState('date');
   const [lang, setLang] = useState('en');
 
+  // Локализация текстов
   const t = {
     en: { title: 'Tasks', add: 'Add', search: 'Search', all: 'All', active: 'Active', completed: 'Completed', noTasks: 'No tasks' },
     ru: { title: 'Задачи', add: 'Добавить', search: 'Поиск', all: 'Все', active: 'Активные', completed: 'Завершенные', noTasks: 'Нет задач' }
@@ -24,6 +26,7 @@ const AdvancedTodoApp = () => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
+  // Добавление новой задачи
   const addTask = () => {
     if (input.trim()) {
       setTasks([...tasks, {
@@ -49,6 +52,7 @@ const AdvancedTodoApp = () => {
       : { high: 3, medium: 2, low: 1 }[b.priority] - { high: 3, medium: 2, low: 1 }[a.priority]
     );
 
+  // Компонент отдельной задачи
   const TaskItem = ({ task }) => (
     <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px', border: '1px solid #ccc', margin: '5px 0', background: task.completed ? '#f0f0f0' : 'white' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -66,6 +70,7 @@ const AdvancedTodoApp = () => {
     </div>
   );
 
+  // Валидация пропсов для TaskItem
   TaskItem.propTypes = {
     task: PropTypes.shape({
       id: PropTypes.number.isRequired,

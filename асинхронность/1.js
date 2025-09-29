@@ -24,8 +24,7 @@ class AdvancedPromise {
     const timeoutPromise = new Promise((_, reject) => {
       setTimeout(() => reject(new Error(`Timeout after ${ms}ms`)), ms);
     });
-    
-    // Гонка между основным промисом и таймаутом
+
     return Promise.race([promise, timeoutPromise]);
   }
 
