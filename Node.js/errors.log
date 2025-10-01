@@ -1,0 +1,11 @@
+2025-10-01T15:28:05.319Z - Error: Тестовая ошибка сервера
+    at C:\Users\Мвидео\OneDrive\Рабочий стол\Node.js\server-validation.js:82:19
+    at Layer.handle [as handle_request] (C:\Users\Мвидео\OneDrive\Рабочий стол\Node.js\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Мвидео\OneDrive\Рабочий стол\Node.js\node_modules\express\lib\router\route.js:149:13)
+    at C:\Users\Мвидео\OneDrive\Рабочий стол\Node.js\server-validation.js:38:5
+    at Layer.handle [as handle_request] (C:\Users\Мвидео\OneDrive\Рабочий стол\Node.js\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Мвидео\OneDrive\Рабочий стол\Node.js\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\Мвидео\OneDrive\Рабочий стол\Node.js\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\Мвидео\OneDrive\Рабочий стол\Node.js\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\Мвидео\OneDrive\Рабочий стол\Node.js\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\Мвидео\OneDrive\Рабочий стол\Node.js\node_modules\express\lib\router\index.js:346:12)
